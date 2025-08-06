@@ -24,6 +24,7 @@ namespace Code.Player
         public override void OnNetworkSpawn()
         {
             if (IsOwner == false) return;
+            transform.position = OwnerClientId == 0 ? new Vector3(-5, 0, 0) : new Vector3(5, 0, 0);
             playerInput.OnJumpPressed += HandleJumpKey;
         }
         

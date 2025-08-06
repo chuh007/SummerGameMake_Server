@@ -8,6 +8,7 @@ namespace Code.Player
     {
         [Header("reference data")] 
         [SerializeField] private PlayerInputSO playerInput;
+        [SerializeField] private Transform forceTrm;
         
         [Header("Setting values")] 
         [SerializeField] private float spikePower = 5f;
@@ -27,10 +28,18 @@ namespace Code.Player
 
         private void HandleSpikeKey()
         {
-            Debug.Log("스파이크");
-            Collider2D targetCol = Physics2D.OverlapCircle(transform.position, 1f, whatIsTarget);
+            if (IsOwner)
+            {
+                SpikeServerRpc();
+            }
+        }
+
+        [ServerRpc]
+        private void SpikeServerRpc()
+        {
+            Collider2D targetCol = Physics2D.OverlapCircle(forceTrm.position, 1f, whatIsTarget);
             if(targetCol == null) return;
-            targetCol.GetComponent<Rigidbody2D>().AddForce(targetCol.transform.position - transform.position * spikePower, ForceMode2D.Impulse);
+            targetCol.GetComponent<Rigidbody2D>().AddForce((targetCol.transform.position - forceTrm.position) * spikePower, ForceMode2D.Impulse);
         }
     }
 }
