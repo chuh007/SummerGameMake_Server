@@ -33,7 +33,7 @@ namespace Code.UI
             bool result = await HostSingleton.Instance.GameManager.StartHostAsync();
             if (result)
             {
-                HostSingleton.Instance.GameManager.ChangeNetworkScene(SceneNames.GameScene);
+                HostSingleton.Instance.GameManager.ChangeNetworkScene(SceneNames.WaitScene);
             }
             else
             {

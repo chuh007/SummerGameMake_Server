@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuScene.unity
     guid: a9a0fae92c132fe469fac84e01ea92b3
   - enabled: 1
+    path: Assets/Scenes/WaitScene.unity
+    guid: 179f3b0a10ebe564d9141fb874bbcd69
+  - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:

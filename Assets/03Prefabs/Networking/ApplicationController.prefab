@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientPrefab: {fileID: 3866214084259781444, guid: 19b4dfc48d4a31147907dfa673fd2f0f, type: 3}
   hostPrefab: {fileID: 6965480117062598652, guid: 70d5c4a80db9f8743bee83cb685a5cc7, type: 3}
+  playerPrefab: {fileID: 3152229108088657191, guid: befd5398b45dee9429bee6a9136128d4, type: 3}

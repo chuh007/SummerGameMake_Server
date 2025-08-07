@@ -1443,6 +1443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   fadeImage: {fileID: 1281229844}
+  playerPrefab: {fileID: 3152229108088657191, guid: befd5398b45dee9429bee6a9136128d4, type: 3}
 --- !u!114 &1184995448
 MonoBehaviour:
   m_ObjectHideFlags: 0

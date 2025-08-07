@@ -14,6 +14,9 @@ namespace Code.Networking
         private Allocation _relayAllocation;
         private const int _maxConnectionCount = 2;
         private string _joinCode;
+        
+        public string JoinCode => _joinCode;
+
         public async Task<bool> StartHostAsync()
         {
             try
