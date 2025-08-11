@@ -1,6 +1,5 @@
 ﻿using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Code.Player
 {
@@ -12,6 +11,7 @@ namespace Code.Player
         
         [Header("Setting values")] 
         [SerializeField] private float spikePower = 5f;
+        [SerializeField] private float spikeRadius = 0.5f;
         [SerializeField] private LayerMask whatIsTarget;
         
         public override void OnNetworkSpawn()
@@ -37,7 +37,7 @@ namespace Code.Player
         [ServerRpc]
         private void SpikeServerRpc()
         {
-            Collider2D targetCol = Physics2D.OverlapCircle(forceTrm.position, 1f, whatIsTarget);
+            Collider2D targetCol = Physics2D.OverlapCircle(forceTrm.position, spikeRadius, whatIsTarget);
             if(targetCol == null) return;
             targetCol.GetComponent<Rigidbody2D>().AddForce((targetCol.transform.position - forceTrm.position) * spikePower, ForceMode2D.Impulse);
         }

@@ -8,10 +8,12 @@ namespace Code.Player
     public class PlayerInputSO : ScriptableObject, Controls.IPlayerActions
     {
         public event Action OnAttackPressed;
-        
         public event Action OnJumpPressed;
+        public event Action OnSlidePressed;
         
         public Vector2 MovementKey { get; private set; }
+
+        public bool CanInput { get; private set; }
         
         private Controls _controls;
 
@@ -23,6 +25,7 @@ namespace Code.Player
                 _controls.Player.SetCallbacks(this);
             }
             _controls.Player.Enable();
+            CanInput = true;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -40,6 +43,17 @@ namespace Code.Player
         {
             if(context.performed)
                 OnJumpPressed?.Invoke();
+        }
+
+        public void OnSlide(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+                OnSlidePressed?.Invoke();
+        }
+
+        public void BlockInputChange(bool value)
+        {
+            CanInput = value;
         }
     }
 }

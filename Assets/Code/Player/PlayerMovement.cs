@@ -44,6 +44,7 @@ namespace Code.Player
         
         private void HandleMovement()
         {
+            if (!playerInput.CanInput) return;
             _rbCompo.linearVelocityX = playerInput.MovementKey.x * moveSpeed;
         }
         

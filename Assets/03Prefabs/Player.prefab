@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1423568690206921158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.5, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: -1127750847847082199}
   - component: {fileID: 5360880937016071274}
   - component: {fileID: -8293919681835803663}
+  - component: {fileID: 4871335778500114931}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -111,7 +112,7 @@ Rigidbody2D:
   m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -238,7 +239,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerInput: {fileID: 11400000, guid: 41ca6cf7a3b3f8045be7132ab2b8818a, type: 2}
   moveSpeed: 5
-  jumpPower: 17.5
+  jumpPower: 20
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
@@ -258,9 +259,27 @@ MonoBehaviour:
   playerInput: {fileID: 11400000, guid: 41ca6cf7a3b3f8045be7132ab2b8818a, type: 2}
   forceTrm: {fileID: 7494686584701189175}
   spikePower: 5
+  spikeRadius: 0.5
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &4871335778500114931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152229108088657191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d9b5cf17d949c0a4aaf9acf1126730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerInput: {fileID: 11400000, guid: 41ca6cf7a3b3f8045be7132ab2b8818a, type: 2}
+  slideForce: 5
+  slideDuration: 0.5
+  slideDelay: 0.75
 --- !u!1 &8515693786875537062
 GameObject:
   m_ObjectHideFlags: 0

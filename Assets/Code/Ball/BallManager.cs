@@ -9,12 +9,16 @@ namespace Code.Ball
     public class BallManager : NetworkBehaviour
     {
         public UnityEvent NextGameStartEvent;
+        public UnityEvent<bool> GameEndEvent;
         
         [SerializeField] private TextMeshProUGUI p1ScoreTxt;
         [SerializeField] private TextMeshProUGUI p2ScoreTxt;
         [SerializeField] private Transform ballSpawnTrm1;
         [SerializeField] private Transform ballSpawnTrm2;
         [SerializeField] private Ball ballPrefab;
+
+        [Header("Setting")]
+        [SerializeField] private int forGameEndWinCount = 15;
         
         private int _p1Score = 0;
         private int _p2Score = 0;
@@ -41,6 +45,11 @@ namespace Code.Ball
             else
                 _p2Score++;
             ScoreTxtChangeClientRpc(_p1Score, _p2Score);
+            if (_p1Score >= forGameEndWinCount || _p2Score >= forGameEndWinCount)
+            {
+                GameEndEvent?.Invoke(_p1Score > _p2Score);
+                return;
+            }
             NextGameStartEvent?.Invoke();
             DOVirtual.DelayedCall(0.5f, () =>
                 _ballObj.ResetBall(x > 0 ? ballSpawnTrm1.position : ballSpawnTrm2.position));

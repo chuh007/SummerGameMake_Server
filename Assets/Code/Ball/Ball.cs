@@ -35,7 +35,7 @@ namespace Code.Ball
             if ((whatIsWall & (1 << other.gameObject.layer)) == 0) return;
             Vector2 normal = other.contacts[0].normal;
             Vector2 reflectedVelocity = Vector2.Reflect(_velocity, normal);
-            _rbCompo.linearVelocity = reflectedVelocity * 0.9f;
+            _rbCompo.linearVelocity = reflectedVelocity;
         }
 
         public void ResetBall(Vector2 pos)

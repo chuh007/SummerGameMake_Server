@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +11,11 @@ namespace Code.Manager
     {
         [SerializeField] private Image fadeImage;
         [SerializeField] private GameObject playerPrefab;
+        [SerializeField] private TextMeshProUGUI winLoseTxt;
 
         public override void OnNetworkSpawn()
         {
+            Debug.Log(IsServer);
             if (IsServer)
             {
                 SpawnAllPlayers();
@@ -61,6 +64,25 @@ namespace Code.Manager
                     playerObj.transform.position = newPosition;
                 }
             }
+        }
+
+        public void GameEndAndWinnerSet(bool isP1Win)
+        {
+            GameEndClientRpc(isP1Win);
+        }
+
+        [ClientRpc]
+        private void GameEndClientRpc(bool isP1Win)
+        {
+            bool isWin;
+            if (NetworkManager.Singleton.IsHost) 
+                isWin = isP1Win;
+            else
+                isWin = !isP1Win;
+
+            winLoseTxt.gameObject.SetActive(true);
+            winLoseTxt.text = isWin ? "승리!" : "패배...";
+            Time.timeScale = 0f;
         }
     }
 }
