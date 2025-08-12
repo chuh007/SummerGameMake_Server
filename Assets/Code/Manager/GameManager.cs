@@ -1,20 +1,30 @@
 ﻿using System;
+using Code.Networking;
+using Code.UI;
 using DG.Tweening;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Code.Manager
 {
     public class GameManager : NetworkBehaviour
     {
+        public UnityEvent OnGameReset;
+        
         [SerializeField] private Image fadeImage;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private TextMeshProUGUI winLoseTxt;
+        [SerializeField] private Button restartBtn;
+        [SerializeField] private Button goConnectBtn;
 
         public override void OnNetworkSpawn()
         {
+            restartBtn.gameObject.SetActive(false);
+            goConnectBtn.gameObject.SetActive(false);
             Debug.Log(IsServer);
             if (IsServer)
             {
@@ -28,6 +38,10 @@ namespace Code.Manager
             {
                 Vector3 spawnPos = client.ClientId == 0 ? Vector3.left * 5 : Vector3.right * 5;
                 GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+                if (client.ClientId != 0)
+                {
+                    player.transform.rotation = Quaternion.Euler(0, 180f, 0);
+                }
                 player.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId);
             }
         }
@@ -82,7 +96,33 @@ namespace Code.Manager
 
             winLoseTxt.gameObject.SetActive(true);
             winLoseTxt.text = isWin ? "승리!" : "패배...";
+            restartBtn.gameObject.SetActive(true);
+            goConnectBtn.gameObject.SetActive(true);
             Time.timeScale = 0f;
+        }
+
+        public void RestartGameBtnClick()
+        {
+            
+        }
+
+        [ServerRpc]
+        public void ResetRequestServerRpc()
+        {
+            
+        }
+        
+        public void Reset()
+        {
+            winLoseTxt.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+            OnGameReset?.Invoke();
+        }
+        
+        public void GoConnectScene()
+        {
+            ClientSingleton.Instance.GameManager.ChangeScene(SceneNames.MenuScene);
+            Time.timeScale = 1f;
         }
     }
 }

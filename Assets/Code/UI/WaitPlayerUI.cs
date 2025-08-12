@@ -10,9 +10,11 @@ namespace Code.UI
     public class WaitPlayerUI : NetworkBehaviour
     {
         [SerializeField] private TextMeshProUGUI joinCodeText;
+        [SerializeField] private TextMeshProUGUI playerCountText;
+        [SerializeField] private GameObject joinCodeObj;
         [SerializeField] private Image startBtnImg;
         
-        private int _playerCount = 0;
+        private int _playerCount = 1;
         
         private void Start()
         {
@@ -24,11 +26,17 @@ namespace Code.UI
                 startBtnImg.color = Color.red;
             }
         }
-        
+
+        public override void OnNetworkSpawn()
+        {
+            if(!IsHost) joinCodeObj.SetActive(false);
+        }
+
         private void OnClientConnected(ulong clientId)
         {
             _playerCount++;
-            if (_playerCount >= 1)
+            playerCountText.text = _playerCount.ToString() + "/2";
+            if (_playerCount >= 2)
             {
                 startBtnImg.color = Color.green;
             }

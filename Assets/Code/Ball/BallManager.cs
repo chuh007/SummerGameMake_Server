@@ -62,5 +62,16 @@ namespace Code.Ball
             p1ScoreTxt.text = score1.ToString();
             p2ScoreTxt.text = score2.ToString();
         }
+
+        public void ResetGame()
+        {
+            _p1Score = 0;
+            _p2Score = 0;
+            p1ScoreTxt.text = _p1Score.ToString();
+            p2ScoreTxt.text = _p2Score.ToString();
+            NextGameStartEvent?.Invoke();
+            DOVirtual.DelayedCall(0.5f, () =>
+                _ballObj.ResetBall(ballSpawnTrm1.position));
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Code.Networking
 {
-    public class LoadSceneBtn : MonoBehaviour
+    public class LoadSceneBtn : NetworkBehaviour
     {
         [SerializeField] private string sceneName;
         
@@ -16,6 +16,12 @@ namespace Code.Networking
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(HandleBtnClick);
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if(!IsHost) gameObject.SetActive(false);
         }
 
         private void HandleBtnClick()
