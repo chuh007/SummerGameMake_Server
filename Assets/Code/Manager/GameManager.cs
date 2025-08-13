@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Code.Networking;
 using Code.UI;
 using DG.Tweening;
@@ -18,12 +19,12 @@ namespace Code.Manager
         [SerializeField] private Image fadeImage;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private TextMeshProUGUI winLoseTxt;
-        [SerializeField] private Button restartBtn;
         [SerializeField] private Button goConnectBtn;
-
+        
+        private Dictionary<ulong, bool> _restartDict = new Dictionary<ulong, bool>();
+        
         public override void OnNetworkSpawn()
         {
-            restartBtn.gameObject.SetActive(false);
             goConnectBtn.gameObject.SetActive(false);
             Debug.Log(IsServer);
             if (IsServer)
@@ -96,33 +97,23 @@ namespace Code.Manager
 
             winLoseTxt.gameObject.SetActive(true);
             winLoseTxt.text = isWin ? "승리!" : "패배...";
-            restartBtn.gameObject.SetActive(true);
             goConnectBtn.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
 
-        public void RestartGameBtnClick()
-        {
-            
-        }
-
-        [ServerRpc]
-        public void ResetRequestServerRpc()
-        {
-            
-        }
-        
         public void Reset()
         {
             winLoseTxt.gameObject.SetActive(false);
             Time.timeScale = 1f;
+            _restartDict.Clear();
             OnGameReset?.Invoke();
         }
         
         public void GoConnectScene()
         {
-            ClientSingleton.Instance.GameManager.ChangeScene(SceneNames.MenuScene);
+            NetworkManager.Singleton.Shutdown();
             Time.timeScale = 1f;
+            ClientSingleton.Instance.GameManager.ChangeScene(SceneNames.MenuScene);
         }
     }
 }
