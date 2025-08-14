@@ -14,7 +14,7 @@ namespace Code.UI
         [SerializeField] private GameObject joinCodeObj;
         [SerializeField] private Image startBtnImg;
         
-        private int _playerCount = 1;
+        private int _playerCount = 0;
         
         private void Start()
         {
@@ -35,15 +35,8 @@ namespace Code.UI
         private void OnClientConnected(ulong clientId)
         {
             _playerCount++;
-            playerCountText.text = _playerCount.ToString() + "/2";
-            if (_playerCount >= 2)
-            {
-                startBtnImg.color = Color.green;
-            }
-            else
-            {
-                startBtnImg.color = Color.red;
-            }
+            playerCountText.text = (_playerCount + 1).ToString() + "/2";
+            startBtnImg.color = _playerCount >= 1 ? Color.green : Color.red;
         }
 
         private void OnClientDisconnected(ulong clientId)
